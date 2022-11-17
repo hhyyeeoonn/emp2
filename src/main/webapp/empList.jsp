@@ -26,22 +26,9 @@
 	}
 	
 	String sort="ASC";
-	String ascDesc="내림차순";
-	
-	
-	if((request.getParameter("ascDesc") != null) && (!(request.getParameter("ascDesc").equals("내림차순")))) {
-		if((request.getParameter("sort") != null) && request.getParameter("sort").equals("ASC")) { // 오름차순 내림차순 분기점
-			sort="DESC";
-		}
-		ascDesc="오름차순";
-	} else {
-		ascDesc="내림차순";
+	if(request.getParameter("sort") !=null && request.getParameter("sort").equals("DESC")) {
+		sort="DESC";
 	}
-	
-	
-	
-	
-	
 	
 	
 	// 2) Model 	
@@ -109,7 +96,17 @@
 		<tr>
 			<th>번호</th>
 			<th>이름
-				<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=<%=sort%>&ascDesc=<%=ascDesc%>">[<%=ascDesc%>]</a>
+				<%
+					if(sort.equals("ASC")) {
+				%>
+						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=DESC">[내림차순]</a>				
+				<%		
+					} else {
+				%>
+						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=ASC">[오름차순]</a>								
+				<%		
+					}
+				%>
 			</th>
 		</tr>
 		<%
@@ -131,8 +128,8 @@
 			<%
 				if(currentPage > 1) {
 			%>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=1&sort=<%=sort%>&ascDesc=<%=ascDesc%>">처음</a>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage-1%>&sort=<%=sort%>&ascDesc=<%=ascDesc%>">이전</a>
+					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=1&sort=<%=sort%>">처음</a>
+					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage-1%>&sort=<%=sort%>">이전</a>
 			<%
 				}
 			%>
@@ -142,7 +139,7 @@
 			<%
 				if(currentPage < lastPage) { 
 			%>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage+1%>&sort=<%=sort%>&ascDesc=<%=ascDesc%>">다음</a>
+					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage+1%>&sort=<%=sort%>">다음</a>
 			<%
 				}
 			%>		
@@ -151,12 +148,11 @@
 			<%
 				if(currentPage < lastPage) {
 			%>
-				<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=lastPage%>&sort=<%=sort%>&ascDesc=<%=ascDesc%>">마지막</a>
+				<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=lastPage%>&sort=<%=sort%>">마지막</a>
 			<%
 				}
 			%>
 		</span>
 	</div>
-	
 </body>
 </html>
