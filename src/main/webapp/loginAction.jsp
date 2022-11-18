@@ -6,9 +6,15 @@
 <%
 	// 1. controller
 	request.setCharacterEncoding("utf-8");
-	int empNo=Integer.parseInt(request.getParameter("empNo"));
+	String num=request.getParameter("empNo");
 	String firstName=request.getParameter("firstName");
 	String lastName=request.getParameter("lastName");
+	
+	if((num == null) || (num.equals(""))) {
+		num="0";
+	}
+	int empNo=Integer.parseInt(num);
+	
 	
 	// session 유효성 검증 코드 필요시 redirect
 	if(session.getAttribute("loginMemberId") != null) { // 로그인 되지 않은 상태
@@ -19,7 +25,7 @@
 	// request 유효성 검증
 	if((empNo == 0) || (firstName == null) || (firstName.equals("")) || (lastName == null) || (lastName.equals(""))) {
 		String msg=URLEncoder.encode("사원번호와 이름을 입력하십시오.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/loginform.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		return;
 	}
 		System.out.println("=빈칸확인=");

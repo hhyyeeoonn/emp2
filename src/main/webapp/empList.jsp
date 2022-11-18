@@ -85,74 +85,82 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="container mt-3">
 	<div>
-		<%=loginEmp.getLastName()%>(<%=loginEmp.getEmpNo()%>)님 반갑습니다.
+		<h4><small><%=loginEmp.getLastName()%>(<%=loginEmp.getEmpNo()%>)님 반갑습니다.</small></h4>
 		<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 	</div>
-	<h2>사원목록</h2>
-	<table>
-		<tr>
-			<th>번호</th>
-			<th>이름
+	<br>
+	<h2 class="text-center">사원목록</h2>
+	<div class="container p-5 my-5 border">
+		<table class="table">
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>
+						<%
+							if(sort.equals("ASC")) {
+						%>
+								<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=DESC">[내림차순]</a>				
+						<%		
+							} else {
+						%>
+								<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=ASC">[오름차순]</a>								
+						<%		
+							}
+						%>
+				</th>
+			</tr>
+			<%
+				for(Employee e:list) {
+			%>	
+				<tr>
+					<td><%=e.getEmpNo()%></td>
+					<td colspan="2"><%=e.getFirstName() +""+ e.getLastName()%></td>
+				</tr>
+			<%
+				}
+			%>
+		</table>
+		
+		
+		<!-- 페이징 -->
+		<div>
+			<span>
 				<%
-					if(sort.equals("ASC")) {
+					if(currentPage > 1) {
 				%>
-						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=DESC">[내림차순]</a>				
-				<%		
-					} else {
-				%>
-						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage%>&sort=ASC">[오름차순]</a>								
-				<%		
+						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=1&sort=<%=sort%>">처음</a>
+						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage-1%>&sort=<%=sort%>">이전</a>
+				<%
 					}
 				%>
-			</th>
-		</tr>
-		<%
-			for(Employee e:list) {
-		%>	
-			<tr>
-				<td><%=e.getEmpNo()%></td>
-				<td><%=e.getFirstName() +""+ e.getLastName()%></td>
-			</tr>
-		<%
-			}
-		%>
-	</table>
-	
-	
-	<!-- 페이징 -->
-	<div>
-		<span>
-			<%
-				if(currentPage > 1) {
-			%>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=1&sort=<%=sort%>">처음</a>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage-1%>&sort=<%=sort%>">이전</a>
-			<%
-				}
-			%>
-		</span>
-		<span><%=currentPage%></span>
-		<span>
-			<%
-				if(currentPage < lastPage) { 
-			%>
-					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage+1%>&sort=<%=sort%>">다음</a>
-			<%
-				}
-			%>		
-		</span>
-		<span>
-			<%
-				if(currentPage < lastPage) {
-			%>
-				<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=lastPage%>&sort=<%=sort%>">마지막</a>
-			<%
-				}
-			%>
-		</span>
+			</span>
+			<span><%=currentPage%></span>
+			<span>
+				<%
+					if(currentPage < lastPage) { 
+				%>
+						<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=currentPage+1%>&sort=<%=sort%>">다음</a>
+				<%
+					}
+				%>		
+			</span>
+			<span>
+				<%
+					if(currentPage < lastPage) {
+				%>
+					<a href="<%=request.getContextPath()%>/empList.jsp?currentPage=<%=lastPage%>&sort=<%=sort%>">마지막</a>
+				<%
+					}
+				%>
+			</span>
+		</div>
 	</div>
+</div>
 </body>
 </html>
